@@ -1,0 +1,179 @@
+package com.zhg.javakc.modules.execute.mine.entity;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.zhg.javakc.base.entity.BaseEntity;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.roadway.entity.RoadwayEntity;
+import com.zhg.javakc.modules.manage.coal.entity.ManageEntity;
+
+/**
+ * 矿井模块实体类
+ * 
+ * @author lzz
+ *
+ */
+@Entity
+@Table(name = "execute_mine")
+public class MineEntity extends BaseEntity<MineEntity> {
+
+	@Id
+	@Column(name = "mine_id")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	private String mineId;// 矿井主键
+
+	@Column(name = "mine_name")
+	
+	private String mineName;// 矿井名称
+
+	@Column(name = "mine_lv")
+	private Integer mineLv;// 瓦斯等级
+
+	@Column(name = "mine_designing_ability")
+	private BigDecimal mineDesAbly;// 设计能力（万吨）
+
+	@Column(name = "mine_transformation_ability")
+	private BigDecimal mineTfmAbly;// 改造能力（万吨）
+
+	@Column(name = "mine_start_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date startDate;// 投产日期
+
+	@Column(name = "mine_transformation_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date mineTfmDate;// 改造日期
+
+	/**
+	 * 配置与煤矿的多对一关系
+	 * 
+	 * @return
+	 */
+	@ManyToOne
+	@JoinColumn(name = "mine_colliery_id")
+	private ManageEntity manageEntity;// 关联煤矿
+
+	@Column(name = "mine_status")
+	private Integer mineStatus = 1;// 状态：0.启用1.停用
+
+	/**
+	 * 配置与巷道的多对多的关系
+	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mine_roadway", joinColumns = @JoinColumn(name = "mine_id"), inverseJoinColumns = @JoinColumn(name = "roadway_id"))
+	private Set<RoadwayEntity> roadwayEntities = new HashSet<>();// 关联对应的所有采区
+
+	/**
+	 * 与所有的采区建立映射关系
+	 * 
+	 * @return
+	 */
+	@OneToMany(mappedBy = "mine")
+	private Set<MiningEntity> minings = new HashSet<>();// 关联对应的所有采区
+
+	public String getMineId() {
+		return mineId;
+	}
+
+	public void setMineId(String mineId) {
+		this.mineId = mineId;
+	}
+
+	public Set<RoadwayEntity> getRoadwayEntities() {
+		return roadwayEntities;
+	}
+
+	public void setRoadwayEntities(Set<RoadwayEntity> roadwayEntities) {
+		this.roadwayEntities = roadwayEntities;
+	}
+
+	public String getMineName() {
+		return mineName;
+	}
+
+	public void setMineName(String mineName) {
+		this.mineName = mineName;
+	}
+
+	public Integer getMineLv() {
+		return mineLv;
+	}
+
+	public void setMineLv(Integer mineLv) {
+		this.mineLv = mineLv;
+	}
+
+	public BigDecimal getMineDesAbly() {
+		return mineDesAbly;
+	}
+
+	public void setMineDesAbly(BigDecimal mineDesAbly) {
+		this.mineDesAbly = mineDesAbly;
+	}
+
+	public BigDecimal getMineTfmAbly() {
+		return mineTfmAbly;
+	}
+
+	public void setMineTfmAbly(BigDecimal mineTfmAbly) {
+		this.mineTfmAbly = mineTfmAbly;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getMineTfmDate() {
+		return mineTfmDate;
+	}
+
+	public void setMineTfmDate(Date mineTfmDate) {
+		this.mineTfmDate = mineTfmDate;
+	}
+
+	public Integer getMineStatus() {
+		return mineStatus;
+	}
+
+	public void setMineStatus(Integer mineStatus) {
+		this.mineStatus = mineStatus;
+	}
+
+	public ManageEntity getManageEntity() {
+		return manageEntity;
+	}
+
+	public void setManageEntity(ManageEntity manageEntity) {
+		this.manageEntity = manageEntity;
+	}
+
+	public Set<MiningEntity> getMinings() {
+		return minings;
+	}
+
+	public void setMinings(Set<MiningEntity> minings) {
+		this.minings = minings;
+	}
+}

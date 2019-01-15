@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="F:\java\apache-tomcat-6.0.18\lib\ojdbc14.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <jdbcConnection 
+        	driverClass="oracle.jdbc.driver.OracleDriver"
+            connectionURL="jdbc:oracle:thin:@192.168.1.99:1521:orcl"
+            userId="JAVAKC" 
+            password="JAVAKC" />
+        
+        <javaTypeResolver>
+			<property name="forceBigDecimals" value="false"/>
+		</javaTypeResolver>
+      
+      	<javaModelGenerator targetPackage="com.zhg.javakc.modules.data.model" targetProject="src/main/java">
+          	<property name="enableSubPackages" value="true"/>
+          	<property name="trimStrings" value="true"/>
+      	</javaModelGenerator>
+       
+      	<sqlMapGenerator targetPackage="data" targetProject="src/main/resources/mapping/modules">
+           	<property name="enableSubPackages" value="true"/>
+      	</sqlMapGenerator>
+       
+      	<javaClientGenerator type="XMLMAPPER" targetPackage="com.zhg.javakc.modules.data.mapper" targetProject="src/main/java">
+        	<property name="enableSubPackages" value="true"/>
+      	</javaClientGenerator>
+      	
+      	<table tableName="tbl_tel" domainObjectName="Data" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+      	
+    </context>
+</generatorConfiguration>

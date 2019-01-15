@@ -1,0 +1,63 @@
+var setting = {
+		
+			view: {
+				dblClickExpand: false,
+				showLine: false
+			},
+			
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			
+			callback: {
+				onClick: onClick
+			}
+			
+			
+		};
+
+		
+		
+		function onClick(e,treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			zTree.expandNode(treeNode);
+			
+			var type=treeNode.t
+			
+			var url;
+			if(type=="ManageEntity"){
+				
+				url="mine/query.do?ztreeid=";
+				
+			}else if(type=="MineEntity"){
+				url="mining/query.do?ztreeid=";
+				
+			}else if(type=="MiningEntity"){
+				url="surface/query.do?ztreeid=";
+				
+			}else if(type=="SurfaceEntity"){
+				url="surface/query.do?ztreeid=";
+			}
+			//主键
+			var ztreeid=treeNode.id
+//			副键
+			var ztreepId=treeNode.pId
+			
+			
+			document.location.href=root+url+ztreeid+"&ztreepId="+ztreepId;	
+				
+		}
+
+		
+		$(document).ready(function(){
+			
+			$.get(root + '/ztree/query.do', function(data) {
+				$.fn.zTree.init($("#treeDemo"), setting, data);
+			}, 'json');
+			
+		});
+		
+		
+		

@@ -1,0 +1,31 @@
+package com.zhg.javakc.modules.worksurface.entity;
+
+import java.math.BigDecimal;
+
+/**工作面实体类
+ * @author Acer
+ *
+ */
+public class SurfaceEntity {
+
+	  private String workId;//id
+	  private String workName;//工作面名称
+	  private int workFaceStatus;//工作面状态
+	  private String workCoalType;//煤种
+	  private String workFloor;//所在煤层
+	  private int workMining;//回采方法
+	  private int workFallingCoal;//落煤方式
+	  private BigDecimal workHight;//采高
+	  private BigDecimal workLength;//采长
+	  private BigDecimal workGoLength;//走向长
+	  private BigDecimal workThick;//煤厚
+	  private BigDecimal workCapacity;//容重
+	  private BigDecimal workReserve;//计算储量
+	  private String workRemarks;//备注
+	  private int workStatus;//状态
+	  
+	
+	
+	
+	
+}

@@ -1,0 +1,93 @@
+package com.zhg.javakc.modules.execute.worksurface.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;import com.zhg.javakc.base.page.Page;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.worksurface.entity.SurfaceEntity;
+import com.zhg.javakc.modules.execute.worksurface.service.SurfaceService;
+
+/**工作面controller
+ * @author Acer
+ *
+ */
+@Controller
+@RequestMapping("/surface")
+public class SurfaceController {
+	@Autowired
+private SurfaceService surfaceService;
+	
+	//查询所有
+	@RequestMapping("/query")
+	public ModelAndView queryAll(SurfaceEntity entity,HttpServletRequest request,HttpServletResponse response
+			,String ztreeid){
+		//数据与页面
+		ModelAndView modelAndView=new ModelAndView();
+		//拼写查询hql
+		String hql="from SurfaceEntity s where 1=1 and s.miningEntity.miningId=:id ";		
+		Map<String, Object> data=new HashMap<String, Object>();
+		data.put("id", ztreeid);
+		//执行查询
+		Page<SurfaceEntity> page = surfaceService.queryPageByCondition(hql, data, new Page<SurfaceEntity>(request, response));
+		modelAndView.addObject("page", page);
+		modelAndView.addObject("entity", entity);
+		//获取采区信息
+//		modelAndView.addObject("mining", surfaceService.get(MiningEntity.class, ztreeid));
+		modelAndView.setViewName("execute/workSurface/list");
+		return modelAndView;				
+	}
+	
+	//新增
+	@RequestMapping("/create")
+	public String create(SurfaceEntity entity) {			
+		System.out.println(entity);
+		surfaceService.create(entity);
+		return "redirect:query.do";
+	
+	}
+	//修改—装载
+	@RequestMapping("/load")
+public String load(String ids,ModelMap map) {
+	map.addAttribute("entity", surfaceService.load(SurfaceEntity.class, ids));
+		return "execute/workSurface/update";			
+	}
+//修改
+	@RequestMapping("/update")
+	public String update(SurfaceEntity entity) {
+		surfaceService.update(entity);
+		return "redirect:query.do";
+	}
+	
+	
+//删除
+	@RequestMapping("/delete")
+public String delete(String []ids) {
+	surfaceService.delete(SurfaceEntity.class, ids);
+	return "redirect:query.do";
+}
+//状态更改
+@RequestMapping("/switch")
+public String state(String ids){
+	SurfaceEntity surfaceEntity=surfaceService.get(SurfaceEntity.class, ids);
+	if (surfaceEntity.getWorkStatus()==0) {
+		surfaceEntity.setWorkStatus(1);
+	}else if (surfaceEntity.getWorkStatus()==1) {
+		surfaceEntity.setWorkStatus(0);
+	}	
+	return "redirect:query.do";	
+	}	
+//查看
+	
+	
+	
+	
+	
+	
+	
+}

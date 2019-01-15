@@ -1,0 +1,10 @@
+package com.zhg.javakc.modules.manage.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.zhg.javakc.base.service.impl.BaseServiceImpl;
+import com.zhg.javakc.modules.manage.entity.ManageEntity;
+@Service
+public class ManageServiceImpl extends BaseServiceImpl<ManageEntity>{
+
+}

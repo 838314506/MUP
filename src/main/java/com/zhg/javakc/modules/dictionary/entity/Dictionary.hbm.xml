@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.zhg.javakc.modules.dictionary.entity.DictionaryEntity" table="DATA_DICTIONARY">
+        <id name="dataId">
+			<column name="DATA_ID"></column>
+			<generator class="uuid"></generator>
+		</id>
+		<property name="dataName">
+			<column name="DATA_NAME"></column>
+		</property>
+		<property name="dataType">
+			<column name="DATA_TYPE"></column>
+		</property>
+		<property name="dataCode">
+			<column name="DATA_CODE"></column>
+		</property>
+		<property name="dataVal">
+			<column name="DATA_VAL"></column>
+		</property>
+		<property name="dataCommon">
+			<column name="DATA_COMMON"></column>
+		</property>
+    </class>
+</hibernate-mapping>

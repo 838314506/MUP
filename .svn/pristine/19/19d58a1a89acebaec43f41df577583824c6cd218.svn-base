@@ -1,0 +1,153 @@
+package com.zhg.javakc.modules.manage.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.zhg.javakc.base.entity.BaseEntity;
+@Entity
+@Table(name = "manager_colliery")
+public class ManageEntity extends BaseEntity<ManageEntity> {
+	@Id
+	@Column(name = "colliery_id")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	private String mId;
+	@Column(name = "colliery_number")
+	private String mNumber;// 编号
+	@Column(name = "colliery_name")
+	private String mName;// 名称
+	@Column(name = "colliery_logogram")
+	private String mLogogram;// 简称
+	@Column(name = "colliery_pinyin")
+	private String mPinyin;// 简拼
+	@Column(name = "colliery_address")
+	private String mAddress;// 地域
+	@Column(name = "colliery_contact")
+	private String mContact;// 联系人
+	@Column(name = "colliery_phone")
+	private String mPhone;// 电话
+	@Column(name = "colliery_faren")
+	private String mFaren;// 法人
+	@Column(name = "colliery_reg_address")
+	private String RegAddress;// 注册地址
+	@Column(name = "colliery_ability")
+	private int Ability;// 整合能力
+	@Column(name = "colliery_area")
+	private int Area;// 井田面积
+	@Column(name = "colliery_possession_reserve")
+	private String PossessionReserve;// 保有储量
+	@Column(name = "colliery_detect_reserve")
+	private int DetectReserve;// 探明储量
+
+	public String getmNumber() {
+		return mNumber;
+	}
+	public void setmNumber(String mNumber) {
+		this.mNumber = mNumber;
+	}
+	public String getmName() {
+		return mName;
+	}
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+	public String getmLogogram() {
+		return mLogogram;
+	}
+	public void setmLogogram(String mLogogram) {
+		this.mLogogram = mLogogram;
+	}
+	public String getmPinyin() {
+		return mPinyin;
+	}
+	public void setmPinyin(String mPinyin) {
+		this.mPinyin = mPinyin;
+	}
+	public String getmAddress() {
+		return mAddress;
+	}
+	public void setmAddress(String mAddress) {
+		this.mAddress = mAddress;
+	}
+	public String getmContact() {
+		return mContact;
+	}
+	public void setmContact(String mContact) {
+		this.mContact = mContact;
+	}
+	public String getmPhone() {
+		return mPhone;
+	}
+	public void setmPhone(String mPhone) {
+		this.mPhone = mPhone;
+	}
+	public String getmFaren() {
+		return mFaren;
+	}
+	public void setmFaren(String mFaren) {
+		this.mFaren = mFaren;
+	}
+	public String getRegAddress() {
+		return RegAddress;
+	}
+	public void setRegAddress(String regAddress) {
+		RegAddress = regAddress;
+	}
+	public int getAbility() {
+		return Ability;
+	}
+	public void setAbility(int ability) {
+		Ability = ability;
+	}
+	public int getArea() {
+		return Area;
+	}
+	public void setArea(int area) {
+		Area = area;
+	}
+	public String getPossessionReserve() {
+		return PossessionReserve;
+	}
+	public void setPossessionReserve(String possessionReserve) {
+		PossessionReserve = possessionReserve;
+	}
+	public int getDetectReserve() {
+		return DetectReserve;
+	}
+	public void setDetectReserve(int detectReserve) {
+		DetectReserve = detectReserve;
+	}
+	public int getOpenUp() {
+		return OpenUp;
+	}
+	public void setOpenUp(int openUp) {
+		OpenUp = openUp;
+	}
+	public String getRemarks() {
+		return Remarks;
+	}
+	public void setRemarks(String remarks) {
+		Remarks = remarks;
+	}
+	public int getStatus() {
+		return Status;
+	}
+	public void setStatus(int status) {
+		Status = status;
+	}
+	
+	
+	
+	@Column(name = "colliery_open_up")
+	private int OpenUp;// 开拓方式
+	@Column(name = "colliery_remarks")
+	private String Remarks;// 备注
+	@Column(name = "colliery_status")
+	private int Status;// 状态
+	
+}

@@ -1,0 +1,8 @@
+package com.zhg.javakc.modules.manage.dao;
+
+import com.zhg.javakc.base.dao.BaseDao;
+import com.zhg.javakc.modules.manage.entity.ManageEntity;
+
+public interface ManageDao extends BaseDao<ManageEntity>{
+
+}

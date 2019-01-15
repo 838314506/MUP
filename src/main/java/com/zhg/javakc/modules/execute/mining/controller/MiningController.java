@@ -1,0 +1,106 @@
+package com.zhg.javakc.modules.execute.mining.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.zhg.javakc.base.page.Page;
+import com.zhg.javakc.modules.execute.mine.entity.MineEntity;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.mining.service.MiningService;
+import com.zhg.javakc.modules.execute.ztree.entity.ZtreeEntity;
+import com.zhg.javakc.modules.execute.ztree.service.ZtreeService;
+
+@Controller
+@RequestMapping("/mining")
+public class MiningController {
+	
+	@Autowired
+	private MiningService ms;	
+
+	@Autowired
+	private ZtreeService zs;
+	//查询
+	@RequestMapping("/query")
+	public String query(MiningEntity me,HttpServletRequest request,HttpServletResponse response,
+			ModelMap model,String ztreeid){
+		String hql = "from MiningEntity m where 1=1 and m.mine.mineId =:id";
+		Map<String,Object> data = new HashMap<String,Object>();
+		data.put("id", ztreeid);
+		model.put("page",ms.queryPageByCondition(hql, data, new Page<MiningEntity>(request,response)));
+		model.put("mine", ms.get(MineEntity.class, ztreeid));
+		
+		
+		return "execute/mining/list";
+	}
+	
+	//添加
+	@RequestMapping("/create")
+	public String create(MiningEntity me){
+		me.setMiningStatus(0);
+		//执行添加
+		ms.create(me);
+		System.out.println(me.getMiningId());
+		//新增树的节点
+		ZtreeEntity obj = new ZtreeEntity();
+		obj.setId(me.getMiningId());
+		obj.setPid(me.getMine().getMineId());
+		obj.setName(me.getMiningName());
+		obj.setType("MiningEntity");
+		obj.setOpen("false");
+		zs.create(obj);
+		return "redirect:query.do?ztreeid="+me.getMine().getMineId();
+	}
+	
+	//查询修改信息
+	@RequestMapping("/load")
+	public String load(String ids,ModelMap model){
+		model.put("me", ms.get(MiningEntity.class, ids));
+		return "execute/mining/update";
+	}
+	
+	//执行修改
+	@RequestMapping("/update")
+	public String update(MiningEntity me){		
+		ms.update(me);
+		return "redirect:query.do?ztreeid="+me.getMine().getMineId();
+	}
+	
+	//删除
+	@RequestMapping("/delete")
+	public String delete(String[] ids){
+		MiningEntity me = ms.get(MiningEntity.class, ids[0]);
+		//删除数据
+		ms.delete(MiningEntity.class, ids);
+		//删除树
+		zs.delete(ZtreeEntity.class,ids);
+		return "redirect:query.do?ztreeid="+me.getMine().getMineId();
+	}
+	
+	//查看详细信息
+	@RequestMapping("/select")
+	public String select(String ids,ModelMap model){
+		model.put("entity", ms.get(MiningEntity.class, ids));
+		return "execute/mining/select";
+	}
+	
+	//修改状态
+	@RequestMapping("/status")
+	public String state(String ids){
+		MiningEntity me = ms.get(MiningEntity.class, ids);
+		if(me.getMiningStatus() == 0){
+			me.setMiningStatus(1);
+		}else if(me.getMiningStatus() == 1){
+			me.setMiningStatus(0);
+		}
+		ms.update(me);
+		return "redirect:query.do?ztreeid="+me.getMine().getMineId();
+	}
+}

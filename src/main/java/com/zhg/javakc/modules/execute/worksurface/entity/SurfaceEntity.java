@@ -1,0 +1,227 @@
+package com.zhg.javakc.modules.execute.worksurface.entity;
+
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.roadway.entity.RoadwayEntity;
+
+/**
+ * 工作面实体类
+ * 
+ * @author Acer
+ *
+ */
+@Entity
+@Table(name = "execute_work")
+public class SurfaceEntity {
+
+	@Id
+	@Column(name = "work_id")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	private String workId;// 工作面id
+
+	@Column(name = "work_name")
+	private String workName;// 工作面名称
+
+	@Column(name = "work_face_status")
+	private int workFaceStatus;// 工作面状态
+
+	@Column(name = "work_coal_type")
+	private int workCoalType;// 煤种
+
+	@Column(name = "work_floor")
+	private String workFloor;// 所在煤层
+
+	@Column(name = "work_mining")
+	private int workMining;// 回采方法
+
+	@Column(name = "work_falling_coal")
+	private int workFallingCoal;// 落煤方式
+
+	@Column(name = "work_hight")
+	private BigDecimal workHight;// 采高
+
+	@Column(name = "work_length")
+	private BigDecimal workLength;// 采长
+
+	@Column(name = "work_go_length")
+	private BigDecimal workGoLength;// 走向长
+
+	@Column(name = "work_thick")
+	private BigDecimal workThick;// 煤厚
+
+	@Column(name = "work_capacity")
+	private BigDecimal workCapacity;// 容重
+
+	@Column(name = "work_reserve")
+	private BigDecimal workReserve;// 计算储量
+
+	@Column(name = "work_remarks")
+	private String workRemarks;// 备注
+
+	@Column(name = "work_status")
+	private int workStatus;// 状态
+
+	@ManyToOne
+	@JoinColumn(name = "work_mining_id")
+	private MiningEntity miningEntity;// 采区实体
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name = "work_roadway", joinColumns = @JoinColumn(name = "work_id"), inverseJoinColumns = @JoinColumn(name = "roadway_id"))
+	private Set<RoadwayEntity> roadwayEntities=new HashSet<RoadwayEntity>();
+
+	public String getWorkId() {
+		return workId;
+	}
+
+	public void setWorkId(String workId) {
+		this.workId = workId;
+	}
+
+	public String getWorkName() {
+		return workName;
+	}
+
+	public void setWorkName(String workName) {
+		this.workName = workName;
+	}
+
+	public int getWorkFaceStatus() {
+		return workFaceStatus;
+	}
+
+	public void setWorkFaceStatus(int workFaceStatus) {
+		this.workFaceStatus = workFaceStatus;
+	}
+
+	public int getWorkCoalType() {
+		return workCoalType;
+	}
+
+	public void setWorkCoalType(int workCoalType) {
+		this.workCoalType = workCoalType;
+	}
+
+	public String getWorkFloor() {
+		return workFloor;
+	}
+
+	public void setWorkFloor(String workFloor) {
+		this.workFloor = workFloor;
+	}
+
+	public int getWorkMining() {
+		return workMining;
+	}
+
+	public void setWorkMining(int workMining) {
+		this.workMining = workMining;
+	}
+
+	public int getWorkFallingCoal() {
+		return workFallingCoal;
+	}
+
+	public void setWorkFallingCoal(int workFallingCoal) {
+		this.workFallingCoal = workFallingCoal;
+	}
+
+	public BigDecimal getWorkHight() {
+		return workHight;
+	}
+
+	public void setWorkHight(BigDecimal workHight) {
+		this.workHight = workHight;
+	}
+
+	public BigDecimal getWorkLength() {
+		return workLength;
+	}
+
+	public void setWorkLength(BigDecimal workLength) {
+		this.workLength = workLength;
+	}
+
+	public BigDecimal getWorkGoLength() {
+		return workGoLength;
+	}
+
+	public void setWorkGoLength(BigDecimal workGoLength) {
+		this.workGoLength = workGoLength;
+	}
+
+	public BigDecimal getWorkThick() {
+		return workThick;
+	}
+
+	public void setWorkThick(BigDecimal workThick) {
+		this.workThick = workThick;
+	}
+
+	public BigDecimal getWorkCapacity() {
+		return workCapacity;
+	}
+
+	public void setWorkCapacity(BigDecimal workCapacity) {
+		this.workCapacity = workCapacity;
+	}
+
+	public BigDecimal getWorkReserve() {
+		return workReserve;
+	}
+
+	public void setWorkReserve(BigDecimal workReserve) {
+		this.workReserve = workReserve;
+	}
+
+	public String getWorkRemarks() {
+		return workRemarks;
+	}
+
+	public void setWorkRemarks(String workRemarks) {
+		this.workRemarks = workRemarks;
+	}
+
+	public int getWorkStatus() {
+		return workStatus;
+	}
+
+	public void setWorkStatus(int workStatus) {
+		this.workStatus = workStatus;
+	}
+
+	public MiningEntity getMiningEntity() {
+		return miningEntity;
+	}
+
+	public void setMiningEntity(MiningEntity miningEntity) {
+		this.miningEntity = miningEntity;
+	}
+
+	public Set<RoadwayEntity> getRoadwayEntities() {
+		return roadwayEntities;
+	}
+
+	public void setRoadwayEntities(Set<RoadwayEntity> roadwayEntities) {
+		this.roadwayEntities = roadwayEntities;
+	}
+
+
+	
+
+
+}

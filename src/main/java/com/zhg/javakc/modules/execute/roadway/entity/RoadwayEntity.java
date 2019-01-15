@@ -1,0 +1,217 @@
+package com.zhg.javakc.modules.execute.roadway.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.NonNull;
+
+import com.sun.istack.internal.NotNull;
+import com.zhg.javakc.base.entity.BaseEntity;
+import com.zhg.javakc.modules.execute.mine.entity.MineEntity;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.worksurface.entity.SurfaceEntity;
+
+@Entity
+@Table(name = "execute_roadway")
+public class RoadwayEntity extends BaseEntity<RoadwayEntity> {
+	@Id
+	@Column(name = "roadway_id")
+	@GeneratedValue(generator = "uuid")
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	private String roadwayId;
+	@Column(name = "roadway_name")
+	private String roadwayName;
+	@Column(name = "roadway_type")
+	private Integer roadwayType;
+	@Column(name = "roadway_position")
+	private String roadwayPosition;
+	@Column(name = "roadway_excavation")
+	private Integer roadwayExcavation;
+	@Column(name = "roadway_support")
+	private Integer roadwaySupport;
+	@Column(name = "roadway_lithology")
+	private Integer roadwayLithology;
+	@Column(name = "roadway_length")
+	private Double roadwayLength;
+	@Column(name = "roadway_width")
+	private Double roadwayWidth;
+	@Column(name = "roadway_height")
+	private Double roadwayHeight;
+	@Column(name = "roadway_section")
+	private Double roadwaySection;
+	@Column(name = "roadyway_floor")
+	private String roadywayFloor;
+	@Column(name = "roadyway_coal_type")
+	private Integer roadywayCoalType;
+	@Column(name = "roadyway_remarks")
+	private String roadywayRemarks;
+	@Column(name = "roadyway_status")
+	private Integer roadywayStatus = 0;
+
+	@ManyToMany(mappedBy = "roadwayEntities")
+	private Set<SurfaceEntity> surfaceEntities = new HashSet<SurfaceEntity>();
+	
+	@ManyToMany(mappedBy = "roadwayEntities")
+	
+	private Set<MiningEntity> miningEntities = new HashSet<MiningEntity>();
+
+	@ManyToMany(mappedBy = "roadwayEntities")
+	
+	private Set<MineEntity> mineEntities = new HashSet<MineEntity>();
+
+	public String getRoadwayId() {
+		return roadwayId;
+	}
+
+	public void setRoadwayId(String roadwayId) {
+		this.roadwayId = roadwayId;
+	}
+
+	public String getRoadwayName() {
+		return roadwayName;
+	}
+
+	public void setRoadwayName(String roadwayName) {
+		this.roadwayName = roadwayName;
+	}
+
+	public Integer getRoadwayType() {
+		return roadwayType;
+	}
+
+	public void setRoadwayType(Integer roadwayType) {
+		this.roadwayType = roadwayType;
+	}
+
+	public String getRoadwayPosition() {
+		return roadwayPosition;
+	}
+
+	public void setRoadwayPosition(String roadwayPosition) {
+		this.roadwayPosition = roadwayPosition;
+	}
+
+	public Integer getRoadwayExcavation() {
+		return roadwayExcavation;
+	}
+
+	public void setRoadwayExcavation(Integer roadwayExcavation) {
+		this.roadwayExcavation = roadwayExcavation;
+	}
+
+	public Integer getRoadwaySupport() {
+		return roadwaySupport;
+	}
+
+	public void setRoadwaySupport(Integer roadwaySupport) {
+		this.roadwaySupport = roadwaySupport;
+	}
+
+	public Integer getRoadwayLithology() {
+		return roadwayLithology;
+	}
+
+	public void setRoadwayLithology(Integer roadwayLithology) {
+		this.roadwayLithology = roadwayLithology;
+	}
+
+	public Double getRoadwayLength() {
+		return roadwayLength;
+	}
+
+	public void setRoadwayLength(Double roadwayLength) {
+		this.roadwayLength = roadwayLength;
+	}
+
+	public Double getRoadwayWidth() {
+		return roadwayWidth;
+	}
+
+	public void setRoadwayWidth(Double roadwayWidth) {
+		this.roadwayWidth = roadwayWidth;
+	}
+
+	public Double getRoadwayHeight() {
+		return roadwayHeight;
+	}
+
+	public void setRoadwayHeight(Double roadwayHeight) {
+		this.roadwayHeight = roadwayHeight;
+	}
+
+	public Double getRoadwaySection() {
+		return roadwaySection;
+	}
+
+	public void setRoadwaySection(Double roadwaySection) {
+		this.roadwaySection = roadwaySection;
+	}
+
+	public String getRoadywayFloor() {
+		return roadywayFloor;
+	}
+
+	public void setRoadywayFloor(String roadywayFloor) {
+		this.roadywayFloor = roadywayFloor;
+	}
+
+	public Integer getRoadywayCoalType() {
+		return roadywayCoalType;
+	}
+
+	public void setRoadywayCoalType(Integer roadywayCoalType) {
+		this.roadywayCoalType = roadywayCoalType;
+	}
+
+	public String getRoadywayRemarks() {
+		return roadywayRemarks;
+	}
+
+	public void setRoadywayRemarks(String roadywayRemarks) {
+		this.roadywayRemarks = roadywayRemarks;
+	}
+
+	public Integer getRoadywayStatus() {
+		return roadywayStatus;
+	}
+
+	public void setRoadywayStatus(Integer roadywayStatus) {
+		this.roadywayStatus = roadywayStatus;
+	}
+
+	public Set<SurfaceEntity> getSurfaceEntities() {
+		return surfaceEntities;
+	}
+
+	public void setSurfaceEntities(Set<SurfaceEntity> surfaceEntities) {
+		this.surfaceEntities = surfaceEntities;
+	}
+
+	public Set<MiningEntity> getMiningEntities() {
+		return miningEntities;
+	}
+
+	public void setMiningEntities(Set<MiningEntity> miningEntities) {
+		this.miningEntities = miningEntities;
+	}
+
+	public Set<MineEntity> getMineEntities() {
+		return mineEntities;
+	}
+
+	public void setMineEntities(Set<MineEntity> mineEntities) {
+		this.mineEntities = mineEntities;
+	}
+
+}

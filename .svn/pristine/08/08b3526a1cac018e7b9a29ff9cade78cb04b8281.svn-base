@@ -1,0 +1,130 @@
+package com.zhg.javakc.modules.manage.entity;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+@Entity
+@Table(name="manager_colliery")
+public class ManageEntity {
+	public String getmNumber() {
+		return mNumber;
+	}
+	public void setmNumber(String mNumber) {
+		this.mNumber = mNumber;
+	}
+	public String getmName() {
+		return mName;
+	}
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+	public String getmLogogram() {
+		return mLogogram;
+	}
+	public void setmLogogram(String mLogogram) {
+		this.mLogogram = mLogogram;
+	}
+	public String getmPinyin() {
+		return mPinyin;
+	}
+	public void setmPinyin(String mPinyin) {
+		this.mPinyin = mPinyin;
+	}
+	public String getmAddress() {
+		return mAddress;
+	}
+	public void setmAddress(String mAddress) {
+		this.mAddress = mAddress;
+	}
+	public String getmContact() {
+		return mContact;
+	}
+	public void setmContact(String mContact) {
+		this.mContact = mContact;
+	}
+	public String getmPhone() {
+		return mPhone;
+	}
+	public void setmPhone(String mPhone) {
+		this.mPhone = mPhone;
+	}
+	public String getmFaren() {
+		return mFaren;
+	}
+	public void setmFaren(String mFaren) {
+		this.mFaren = mFaren;
+	}
+	public String getRegAddress() {
+		return RegAddress;
+	}
+	public void setRegAddress(String regAddress) {
+		RegAddress = regAddress;
+	}
+	public int getAbility() {
+		return Ability;
+	}
+	public void setAbility(int ability) {
+		Ability = ability;
+	}
+	public int getArea() {
+		return Area;
+	}
+	public void setArea(int area) {
+		Area = area;
+	}
+	public String getPossessionReserve() {
+		return PossessionReserve;
+	}
+	public void setPossessionReserve(String possessionReserve) {
+		PossessionReserve = possessionReserve;
+	}
+	public int getDetectReserve() {
+		return DetectReserve;
+	}
+	public void setDetectReserve(int detectReserve) {
+		DetectReserve = detectReserve;
+	}
+	public int getOpenUp() {
+		return OpenUp;
+	}
+	public void setOpenUp(int openUp) {
+		OpenUp = openUp;
+	}
+	public String getRemarks() {
+		return Remarks;
+	}
+	public void setRemarks(String remarks) {
+		Remarks = remarks;
+	}
+	public int getStatus() {
+		return Status;
+	}
+	public void setStatus(int status) {
+		Status = status;
+	}
+	public Set<ManageEntity> getManage() {
+		return manage;
+	}
+	public void setManage(Set<ManageEntity> manage) {
+		this.manage = manage;
+	}
+	private String mNumber;//编号
+	private String mName;//名称
+	private String mLogogram;//简称
+	private String mPinyin;//简拼
+	private String mAddress;//地域
+	private String mContact;//联系人
+	private String mPhone;//电话
+	private String mFaren;//法人
+	private String RegAddress;//注册地址
+	private int Ability;//整合能力
+	private int Area;//井田面积
+	private String PossessionReserve;//保有储量
+	private int DetectReserve;//探明储量
+	private int OpenUp;//开拓方式
+	private String Remarks;//备注
+	private int Status;//状态
+	private Set<ManageEntity> manage=new HashSet<ManageEntity>();
+	}

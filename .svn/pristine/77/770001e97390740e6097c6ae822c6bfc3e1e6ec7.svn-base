@@ -1,0 +1,68 @@
+package com.zhg.javakc.modules.execute.mine.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.zhg.javakc.modules.execute.mine.service.MineService;
+/**
+ * 矿井Controller
+ * @author lzz
+ *
+ */
+@Controller
+@RequestMapping("/mine")
+public class MineController {
+	
+	@Autowired
+	private MineService mineService;
+	
+	/**
+	 * 查询方法
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("query")
+	public String query() throws Exception
+	{
+		return "mine/list";
+	}
+	
+	/**
+	 * 新增方法
+	 */
+	@RequestMapping("create")
+	public String create() throws Exception
+	{
+		return "redirect:query.do";
+	}
+	
+	/**
+	 * 修改查询方法
+	 */
+	@RequestMapping("load")
+	public String load() throws Exception
+	{
+		return "mine/update";
+	}
+	
+	/**
+	 * 修改方法
+	 */
+	@RequestMapping("update")
+	public String update() throws Exception
+	{
+		return "redirect:query.do";
+	}
+	
+	/**
+	 * 删除方法
+	 */
+	@RequestMapping("delete")
+	public String delete() throws Exception
+	{
+		
+		return "redirect:query.do";
+	}
+	
+}

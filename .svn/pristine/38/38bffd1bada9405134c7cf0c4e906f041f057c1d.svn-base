@@ -1,0 +1,185 @@
+package com.zhg.javakc.modules.execute.roadway.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.zhg.javakc.base.page.Page;
+import com.zhg.javakc.modules.execute.mine.entity.MineEntity;
+import com.zhg.javakc.modules.execute.mining.entity.MiningEntity;
+import com.zhg.javakc.modules.execute.roadway.entity.RoadwayEntity;
+import com.zhg.javakc.modules.execute.roadway.service.RoadWayService;
+import com.zhg.javakc.modules.execute.worksurface.entity.SurfaceEntity;
+import com.zhg.javakc.modules.execute.ztree.entity.ZtreeEntity;
+import com.zhg.javakc.modules.execute.ztree.service.ZtreeService;
+
+@Controller
+@RequestMapping("parent")
+public class ParentController {
+	@Resource
+	private RoadWayService service;
+	
+	@Autowired
+	private ZtreeService ztreeService;
+
+	/**
+	 * 查询方法
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("query")
+	public ModelAndView queryParent(ModelAndView view, String ztreepId, HttpServletRequest req,
+			HttpServletResponse resp) {
+		Map<String, Object> param = new HashMap<>();
+		try {
+			String hql = null;
+			ZtreeEntity ztree = service.load(ZtreeEntity.class, ztreepId);
+			if (MineEntity.class.getSimpleName().equals(ztree.getType())) {
+				hql = " select roadwayEntities FROM MineEntity where mineId =:id ";
+			} else if (MiningEntity.class.getSimpleName().equals(ztree.getType())) {
+				hql = " select roadwayEntities FROM MiningEntity where miningId =:id ";
+			} else if (SurfaceEntity.class.getSimpleName().equals(ztree.getType())) {
+				hql = " select roadwayEntities FROM SurfaceEntity where workId =:id";
+			}
+			param.put("id", ztreepId);
+			view.setViewName("execute/roadway/list");
+			view.addObject("page", service.queryPageByCondition(hql, param, new Page<RoadwayEntity>(req, resp)));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return view;
+	}
+
+	/**
+	 * 新增方法
+	 */
+	@RequestMapping("create")
+	public String create(RoadwayEntity roadwayEntity, String ztreepId,HttpServletRequest request) throws Exception {
+		ZtreeEntity ztree = service.load(ZtreeEntity.class, ztreepId);
+		//新增树的节点
+		ZtreeEntity obj = new ZtreeEntity();
+		String url = "";
+		if (MineEntity.class.getSimpleName().equals(ztree.getType())) {
+			MineEntity mine = service.load(MineEntity.class, ztreepId);
+			mine.getRoadwayEntities().add(roadwayEntity);
+			obj.setName(mine.getMineName());
+			obj.setType("MineEntity");
+			url="redirect:/mine/query.do?ztreeid=";
+		} else if (MiningEntity.class.getSimpleName().equals(ztree.getType())) {
+			MiningEntity mining = service.load(MiningEntity.class, ztreepId);
+			mining.getRoadwayEntities().add(roadwayEntity);
+			obj.setName(mining.getMiningName());
+			obj.setType("MiningEntity");
+			url="redirect:/mining/query.do?ztreeid=";
+		} else if (SurfaceEntity.class.getSimpleName().equals(ztree.getType())) {
+			SurfaceEntity surface = service.load(SurfaceEntity.class, ztreepId);
+			surface.getRoadwayEntities().add(roadwayEntity);
+			obj.setName(surface.getWorkName());
+			obj.setType("SurfaceEntity");
+			url="redirect:/work/query.do?ztreeid=";
+		}
+		service.create(roadwayEntity);
+		obj.setId(roadwayEntity.getRoadwayId());
+		obj.setPid(ztreepId);
+		obj.setOpen("false");
+		ztreeService.create(obj);
+		return url + ztreepId;
+	}
+
+	/**
+	 * 修改查询方法
+	 */
+	@RequestMapping("view")
+	public String view(String id1, String ztreepId,ModelMap model) throws Exception {
+		model.put("roadwayEntity", service.get(RoadwayEntity.class, id1));
+		model.put("ztreepId", ztreepId);
+		return "execute/roadway/update";
+	}
+
+	/**
+	 * 根据id查询
+	 */
+	@RequestMapping("look")
+	public String look(String id1, ModelMap model) throws Exception {
+		model.put("roadwayEntity", service.get(RoadwayEntity.class, id1));
+		return "execute/roadway/look";
+	}
+
+	/**
+	 * 状态修改
+	 * 
+	 * @param ids
+	 * @return 
+	 * @throws Exception
+	 */
+	@RequestMapping("state")
+	public String state(String id1,String ztreepId) throws Exception {
+		RoadwayEntity roadwayEntity = service.load(RoadwayEntity.class, id1);
+		if (roadwayEntity.getRoadywayStatus() == 1) {
+			roadwayEntity.setRoadywayStatus(0);
+			service.update(roadwayEntity);
+		} else {
+			roadwayEntity.setRoadywayStatus(1);
+			service.update(roadwayEntity);
+		}
+		String url = "";
+		ZtreeEntity ztree = service.load(ZtreeEntity.class, ztreepId);
+		if (MineEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mine/query.do?ztreeid=";
+		} else if (MiningEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mining/query.do?ztreeid=";
+			
+		} else if (SurfaceEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/work/query.do?ztreeid=";
+		}
+		return url + ztreepId;
+	}
+
+	/**
+	 * 修改方法
+	 */
+	@RequestMapping("update")
+	public String update(RoadwayEntity roadwayEntity,String ztreepId) throws Exception {
+		service.update(roadwayEntity);
+		String url = "";
+		ZtreeEntity ztree = service.load(ZtreeEntity.class, ztreepId);
+		if (MineEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mine/query.do?ztreeid=";
+		} else if (MiningEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mining/query.do?ztreeid=";
+			
+		} else if (SurfaceEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/work/query.do?ztreeid=";
+		}
+		return url + ztreepId;
+	}
+
+	/**
+	 * 删除方法
+	 */
+	@RequestMapping("delete")
+	public String delete(String[] id1,String ztreepId) throws Exception {
+		service.delete(RoadwayEntity.class, id1);
+		String url = "";
+		ZtreeEntity ztree = service.load(ZtreeEntity.class, ztreepId);
+		if (MineEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mine/query.do?ztreeid=";
+		} else if (MiningEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/mining/query.do?ztreeid=";
+			
+		} else if (SurfaceEntity.class.getSimpleName().equals(ztree.getType())) {
+			url="redirect:/work/query.do?ztreeid=";
+		}
+		return url + ztreepId;
+	}
+}

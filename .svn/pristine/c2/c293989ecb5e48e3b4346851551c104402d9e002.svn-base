@@ -1,0 +1,198 @@
+package com.zhg.javakc.modules.execute.mining.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.zhg.javakc.base.entity.BaseEntity;
+import com.zhg.javakc.modules.execute.mine.entity.MineEntity;
+
+
+@Entity
+@Table(name="execute_mining")
+public class MiningEntity extends BaseEntity<MiningEntity> {
+	@Id
+	@Column(name="mining_id")
+	@GeneratedValue(generator="uuid") //主键生成策略
+	@GenericGenerator(name="uuid",strategy="uuid")
+	private String miningId;	//id
+	
+	@Column(name="mining_name")
+	private String miningName;	//采区名称
+	
+	@Column(name="mining_Level")
+	private String miningLevel;	//采区所在煤层
+	
+	@Column(name="mining_type")
+	private Integer miningType;	//采区煤种类型
+	
+	@Column(name="mining_hight")
+	private Double miningHight;	//走向长
+	
+	@Column(name="mining_width")
+	private Double miningWidth;	//采高
+	
+	@Column(name="mining_length")
+	private Double miningLength;	//采长
+	
+	@Column(name="mining_size")
+	private Double miningSize;		//煤厚
+	
+
+	@Column(name="mining_weight")
+	private Double miningWeight;	//容重
+	
+	@Column(name="mining_status")
+	private Integer miningStatus;	//状态
+	
+	@Column(name="mining_remarks")
+	private String remarks;			//备注
+	
+	//加注解
+	@ManyToOne
+	@JoinColumn(name="mining_mine_id")
+	private MineEntity mine;		//所属矿区
+
+	//加注解
+	//@OneToMany(mappedBy="多端的关联属性名")
+	//@JoinColumn(name="对方的数据库外键列名")
+	//private List<RoadwayEntity> RoadwayList = new ArrayList<>();	//管理的巷道
+	
+	//加注解
+	//@OneToMany(mappedBy="多端的关联属性名")
+	//@JoinColumn(name="对方的数据库外键列名")
+	//private List<Work> workList = new ArrayList<>(); 	//工作面
+	
+	public Double getMiningSize() {
+		return miningSize;
+	}
+	
+	public void setMiningSize(Double miningSize) {
+		this.miningSize = miningSize;
+	}
+	
+	public String getMiningId() {
+		return miningId;
+	}
+
+	public void setMiningId(String miningId) {
+		this.miningId = miningId;
+	}
+
+	public String getMiningName() {
+		return miningName;
+	}
+
+	public void setMiningName(String miningName) {
+		this.miningName = miningName;
+	}
+
+	public String getMiningLevel() {
+		return miningLevel;
+	}
+
+	public void setMiningLevel(String miningLevel) {
+		this.miningLevel = miningLevel;
+	}
+
+	public Integer getMiningType() {
+		return miningType;
+	}
+
+	public void setMiningType(Integer miningType) {
+		this.miningType = miningType;
+	}
+
+	public Double getMiningHight() {
+		return miningHight;
+	}
+
+	public void setMiningHight(Double miningHight) {
+		this.miningHight = miningHight;
+	}
+
+	public Double getMiniingWidth() {
+		return miningWidth;
+	}
+
+	public void setMiniingWidth(Double miningWidth) {
+		this.miningWidth = miningWidth;
+	}
+
+	public Double getMiningWeight() {
+		return miningWeight;
+	}
+
+	public void setMiningWeight(Double miningWeight) {
+		this.miningWeight = miningWeight;
+	}
+
+	
+	public Double getMiningWidth() {
+		return miningWidth;
+	}
+
+	public void setMiningWidth(Double miningWidth) {
+		this.miningWidth = miningWidth;
+	}
+
+	public Double getMiningLength() {
+		return miningLength;
+	}
+
+	public void setMiningLength(Double miningLength) {
+		this.miningLength = miningLength;
+	}
+
+	public Integer getMiningStatus() {
+		return miningStatus;
+	}
+
+	public void setMiningStatus(Integer miningStatus) {
+		this.miningStatus = miningStatus;
+	}
+
+	public MineEntity getMine() {
+		return mine;
+	}
+
+	public void setMine(MineEntity mine) {
+		this.mine = mine;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	/*public List<Work> getWorkList() {
+		return workList;
+	}
+
+	public void setWorkList(List<Work> workList) {
+		this.workList = workList;
+	}*/
+
+
+	
+	/*public List<RoadwayEntity> getRoadwayList() {
+		return RoadwayList;
+	}
+
+	public void setRoadwayList(List<RoadwayEntity> roadwayList) {
+		RoadwayList = roadwayList;
+	}*/
+	
+}

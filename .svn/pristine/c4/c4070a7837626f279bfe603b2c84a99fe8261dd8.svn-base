@@ -1,0 +1,134 @@
+package com.zhg.javakc.modules.execute.mining.entity;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import com.zhg.javakc.base.entity.BaseEntity;
+import com.zhg.javakc.modules.execute.roadway.entity.RoadwayEntity;
+import com.zhg.javakc.modules.execute.worksurface.entity.SurfaceEntity;
+
+@Entity
+@Table(name = "execute_mining")
+public class MiningEntity extends BaseEntity<MiningEntity> {
+	@Id
+	@Column(name = "mining_id")
+	@GeneratedValue(generator = "uuid") // 主键生成策略
+	@GenericGenerator(name = "uuid", strategy = "uuid")
+	private String miningId;
+
+	@Column(name = "mining_name")
+	private String miningName;
+
+	public Set<RoadwayEntity> getRoadwaySet() {
+		return roadwaySet;
+	}
+
+	public void setRoadwaySet(Set<RoadwayEntity> roadwaySet) {
+		this.roadwaySet = roadwaySet;
+	}
+
+	@Column(name = "mining_Level")
+	private String miningLevel;
+
+	@Column(name = "mining_type")
+	private Integer miningType;
+
+	@Column(name = "mining_hight")
+	private Double miningHight;
+
+	@Column(name = "mining_width")
+	private Double miniingWidth;
+
+	@Column(name = "mining_weight")
+	private Double miningWeight;
+
+	@Column(name = "mining_status")
+	private Integer miningStatus;
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="work_mining_id")
+	private Set<SurfaceEntity> surfaceEntities = new HashSet<>();
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "mining_roadway", joinColumns = @JoinColumn(name = "mining_id"), inverseJoinColumns = @JoinColumn(name = "roadway_id"))
+	private Set<RoadwayEntity> roadwaySet = new HashSet<>();
+
+	public String getMiningId() {
+		return miningId;
+	}
+
+	public void setMiningId(String miningId) {
+		this.miningId = miningId;
+	}
+
+	public String getMiningName() {
+		return miningName;
+	}
+
+	public void setMiningName(String miningName) {
+		this.miningName = miningName;
+	}
+
+	public String getMiningLevel() {
+		return miningLevel;
+	}
+
+	public void setMiningLevel(String miningLevel) {
+		this.miningLevel = miningLevel;
+	}
+
+	public Integer getMiningType() {
+		return miningType;
+	}
+
+	public void setMiningType(Integer miningType) {
+		this.miningType = miningType;
+	}
+
+	public Double getMiningHight() {
+		return miningHight;
+	}
+
+	public void setMiningHight(Double miningHight) {
+		this.miningHight = miningHight;
+	}
+
+	public Double getMiniingWidth() {
+		return miniingWidth;
+	}
+
+	public void setMiniingWidth(Double miniingWidth) {
+		this.miniingWidth = miniingWidth;
+	}
+
+	public Double getMiningWeight() {
+		return miningWeight;
+	}
+
+	public void setMiningWeight(Double miningWeight) {
+		this.miningWeight = miningWeight;
+	}
+
+	public Integer getMiningStatus() {
+		return miningStatus;
+	}
+
+	public void setMiningStatus(Integer miningStatus) {
+		this.miningStatus = miningStatus;
+	}
+
+}
